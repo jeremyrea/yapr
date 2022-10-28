@@ -8,6 +8,23 @@
 
 set -e
 
+declare -a dependencies=(podman systemctl awk yq grep)
+
+function check_dependencies() {
+  exit_code=0
+
+  for dep in "${dependencies[@]}"; do
+    if ! which "${dep}" &>/dev/null; then
+      echo "${dep} is required"
+      exit_code=1
+    fi
+  done
+
+  return $exit_code
+}
+
+check_dependencies
+
 POD=$1
 KUBE_FILE="pods/${POD}.yaml"
 SERVICE_FILE="systemd/pod-${POD}.service"
