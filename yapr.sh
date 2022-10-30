@@ -131,6 +131,10 @@ function main {
       create $2 
       exit 0
       ;;
+    *) 
+      echo "Use yapr -h to see usage"
+      exit 1
+      ;;
   esac
 }
 
